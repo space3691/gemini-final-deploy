@@ -21,12 +21,12 @@ const Navbar = ({ setPage, currentPage }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || currentPage !== 'home' ? 'bg-white/95 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'}`}>
+    <nav className={"fixed w-full z-50 transition-all duration-500 " + (isScrolled || currentPage !== 'home' ? 'bg-white/95 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8')}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <button onClick={() => setPage('home')} className="h-10 outline-none">
           <img src={isScrolled || currentPage !== 'home' ? "https://modulate.com.au/wp-content/uploads/2026/02/Peregrine_Colour.png" : "https://modulate.com.au/wp-content/uploads/2026/02/Peregrine_white.png"} className="h-full w-auto" alt="Logo" />
         </button>
-        <div className={`hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] uppercase ${isScrolled || currentPage !== 'home' ? 'text-slate-600' : 'text-white'}`}>
+        <div className={"hidden md:flex gap-10 text-[10px] font-bold tracking-[0.2em] uppercase " + (isScrolled || currentPage !== 'home' ? 'text-slate-600' : 'text-white')}>
           {['About', 'Showcase', 'Expertise', 'Sustainability', 'Contact'].map(item => <button key={item} className="hover:text-[#EF426F] transition-colors uppercase">{item}</button>)}
         </div>
       </div>
@@ -47,7 +47,7 @@ const HomeView = ({ setPage }) => (
     </section>
     <section className="py-32 px-6 max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
        {Object.entries(projectData).map(([key, item]) => (
-         <div key={key} className="group cursor-pointer" onClick={() => setPage(`project-${key}`)}>
+         <div key={key} className="group cursor-pointer" onClick={() => setPage("project-" + key)}>
             <div className="aspect-square overflow-hidden mb-6 bg-slate-100">
               <img src={item.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={item.title} />
             </div>
