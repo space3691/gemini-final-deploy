@@ -19,12 +19,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
- * PEREGRINE INFRASTRUCTURE - MAIN APPLICATION
- * * Architecture:
- * - Single Page Application (SPA) using state-based routing.
- * - Tailwind CSS for responsive architectural styling.
- * - Framer Motion for cinematic transitions.
- * - Lucide React for minimalist iconography.
+ * PEREGRINE INFRASTRUCTURE - PRODUCTION BUILD
+ * Image links are now mapped to /public/images/ local assets.
  */
 
 // --- Data Structures: Projects ---
@@ -33,7 +29,7 @@ const projectData = {
   development: {
     title: "DEVELOPMENT",
     subtitle: "Visionary Urban Planning",
-    image: "https://modulate.com.au/wp-content/uploads/2026/02/AdobeStock_246767744-Large-1.jpeg", 
+    image: "/images/AdobeStock_246767744-Large-1.jpeg", 
     desc: "Transforming visionary urban concepts into landmark physical infrastructure. Our development arm focuses on high-density commercial hubs and mixed-use precincts that define modern cityscapes.",
     stats: [
       { label: "Completed", value: "45+" },
@@ -45,7 +41,7 @@ const projectData = {
   otr: {
     title: "OTR",
     subtitle: "Premium Retail Innovation",
-    image: "https://modulate.com.au/wp-content/uploads/2026/02/OTR-Greenacres-Website-Landing-Page-1600x2200px-2024.jpg",
+    image: "/images/OTR-Greenacres-Website-Landing-Page-1600x2200px-2024.jpg",
     desc: "Australia's benchmark for premium retail and architectural convenience integration. The OTR network represents the pinnacle of high-frequency consumer infrastructure.",
     stats: [
       { label: "Locations", value: "180+" },
@@ -57,7 +53,7 @@ const projectData = {
   motorsport: {
     title: "MOTORSPORT PARK",
     subtitle: "Global Sporting Destination",
-    image: "https://modulate.com.au/wp-content/uploads/2026/02/495551705.jpg",
+    image: "/images/495551705.jpg",
     desc: "The Bend Motorsport Park is a world-class multi-discipline motorsport destination. It stands as one of the most significant sporting infrastructure projects in the Southern Hemisphere.",
     stats: [
       { label: "Track Length", value: "7.7km" },
@@ -74,7 +70,7 @@ const expertiseData = {
   "property-development": {
     title: "PROPERTY DEVELOPMENT",
     subtitle: "End-to-End Delivery",
-    image: "https://modulate.com.au/wp-content/uploads/2026/02/AdobeStock_306231622-scaled.jpeg",
+    image: "/images/AdobeStock_306231622-scaled.jpeg",
     desc: "Peregrine Infrastructure leads the market in complex, large-scale property development. We identify potential where others see complexity.",
     stats: [
       { label: "Sector Lead", value: "Tier 1" },
@@ -86,7 +82,7 @@ const expertiseData = {
   "asset-management": {
     title: "ASSET MANAGEMENT",
     subtitle: "Yield & Optimization",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070",
+    image: "/images/615bd0976df5645249f535c1_Breathe-edgars-creek-house-10.jpg",
     desc: "Maximizing the long-term value of diverse portfolios through operational efficiency, proactive maintenance, and strategic leasing.",
     stats: [
       { label: "AUM", value: "$3.5B+" },
@@ -135,11 +131,11 @@ const Navbar = ({ setPage, currentPage }) => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || currentPage !== 'home' ? 'bg-white/95 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <button onClick={() => setPage('home')} className="relative h-8 md:h-10 w-40 md:w-48 transition-all duration-500 block hover:opacity-80 outline-none z-[60]">
+        <button onClick={() => setPage('home')} className="relative h-8 md:h-10 w-40 md:w-48 block transition-opacity hover:opacity-80 outline-none z-[60]">
           <img 
             src={(isScrolled || currentPage !== 'home') 
-              ? "https://modulate.com.au/wp-content/uploads/2026/02/Peregrine_Colour.png" 
-              : "https://modulate.com.au/wp-content/uploads/2026/02/Peregrine_white.png"
+              ? "/images/Peregrine_Colour.png" 
+              : "/images/Peregrine_white.png"
             } 
             alt="Peregrine Logo" 
             className="h-full w-auto object-contain transition-opacity duration-500"
@@ -270,7 +266,7 @@ const HomeView = ({ setPage }) => (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-900 group">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img 
-          src="https://modulate.com.au/wp-content/uploads/2026/02/AdobeStock_306231622-scaled.jpeg" 
+          src="/images/AdobeStock_306231622-scaled.jpeg" 
           className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-90 group-hover:brightness-125 group-hover:scale-105 transition-all duration-1000 ease-in-out" 
           alt="Peregrine Corporate Infrastructure" 
         />
@@ -321,7 +317,7 @@ const HomeView = ({ setPage }) => (
       </div>
     </section>
 
-    {/* Showcase Section: Grid aligned to TOP for labels */}
+    {/* Showcase Section */}
     <section id="showcase" className="relative z-20">
       <div className="max-w-[1400px] mx-auto bg-black pt-16 pb-8 px-10 md:px-8 -mt-24 md:-mt-48 lg:-mt-64 shadow-2xl">
          <h4 className="text-slate-500 font-mono text-xs md:text-[10px] tracking-[0.4em] uppercase mb-2">SELECTED WORKS</h4>
@@ -333,7 +329,6 @@ const HomeView = ({ setPage }) => (
             <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 object-center" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-transparent"></div>
             
-            {/* Labels and description aligned to top of the grid cell */}
             <div className="absolute inset-0 flex flex-col justify-start p-10 md:p-12 text-white space-y-4">
               <h3 className="text-lg md:text-[15px] font-bold tracking-[0.2em] uppercase">{item.title}</h3>
               <p className="text-[17px] md:text-[13px] font-light leading-relaxed opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-500 max-w-[320px] md:max-w-[300px]">{item.desc}</p>
@@ -383,7 +378,7 @@ const HomeView = ({ setPage }) => (
     <section id="sustainability" className="relative py-24 md:py-48 px-6 overflow-hidden bg-slate-950 group cursor-default">
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://modulate.com.au/wp-content/uploads/2026/02/615bd0976df5645249f535c1_Breathe-edgars-creek-house-10.jpg" 
+          src="/images/615bd0976df5645249f535c1_Breathe-edgars-creek-house-10.jpg" 
           alt="Sustainable" 
           className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-110 group-hover:brightness-125 transition-all duration-1000" 
         />
@@ -433,7 +428,7 @@ const HomeView = ({ setPage }) => (
   </>
 );
 
-// --- View: Detail (Unified Template for Projects & Expertise) ---
+// --- View: Detail ---
 
 const DetailView = ({ contentId, setPage }) => {
   let content = null;
@@ -460,11 +455,11 @@ const DetailView = ({ contentId, setPage }) => {
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 md:gap-24">
           <div className="lg:col-span-8 space-y-12">
-            <p className="text-3xl md:text-4xl text-slate-900 font-light leading-snug">{content.desc}</p>
+            <p className="text-3xl md:text-4xl text-slate-900 font-light leading-snug italic">{content.desc}</p>
             <div className="h-px bg-slate-100 w-full"></div>
             <p className="text-xl text-slate-500 leading-relaxed font-light">{content.details}</p>
           </div>
-          <div className="lg:col-span-4 bg-slate-50 p-10 md:p-12 space-y-12 border-t-4 border-[#EF426F]">
+          <div className="lg:col-span-4 bg-slate-50 p-10 md:p-12 space-y-12 border-t-4 border-[#EF426F] h-fit sticky top-32">
             {content.stats.map((stat, i) => (
               <div key={i} className="space-y-2">
                 <div className="text-[10px] font-bold text-slate-400 tracking-[0.4em] uppercase">{stat.label}</div>
@@ -475,7 +470,6 @@ const DetailView = ({ contentId, setPage }) => {
         </div>
       </section>
 
-      {/* Fixed "Back to Home" button at bottom resolving logo conflict */}
       <div className="fixed bottom-10 left-10 z-[100]">
         <motion.button 
           initial={{ opacity: 0, x: -20 }}
@@ -491,42 +485,29 @@ const DetailView = ({ contentId, setPage }) => {
   );
 };
 
-// --- Footer Component ---
+// --- Footer ---
 
 const Footer = ({ setPage, currentPage }) => {
-  const handleFooterNav = (id) => {
-    if (currentPage !== 'home') {
-      setPage('home');
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
-    } else {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <footer className="py-24 px-6 bg-slate-950 border-t border-white/5 text-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 text-left">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16">
         <div className="col-span-2">
           <div className="h-12 mb-10">
-            <img src="https://modulate.com.au/wp-content/uploads/2026/02/Peregrine_white.png" alt="Peregrine" className="h-full w-auto object-contain" />
+            <img src="/images/Peregrine_white.png" alt="Peregrine" className="h-full w-auto object-contain" />
           </div>
           <p className="text-slate-400 max-w-sm mb-10 leading-relaxed text-lg md:text-base">Evolving the Australian landscape through visionary property and high-performance infrastructure solutions.</p>
         </div>
         <div>
           <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">OFFICE</h4>
-          <p className="text-slate-400 text-base md:text-sm leading-relaxed mb-4 text-left">270 The Parade,<br />Kensington SA 5068</p>
-          <p className="text-slate-400 text-base md:text-sm text-left">office@peregrine.com.au</p>
+          <p className="text-slate-400 text-sm leading-relaxed mb-4">270 The Parade, Kensington SA 5068</p>
+          <p className="text-slate-400 text-sm">office@peregrine.com.au</p>
         </div>
         <div>
           <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">NAVIGATE</h4>
-          <ul className="text-slate-400 text-base md:text-sm space-y-3 uppercase tracking-widest font-bold">
+          <ul className="text-slate-400 text-sm space-y-3 uppercase tracking-widest font-bold">
             {['About', 'Expertise', 'Sustainability', 'Contact'].map((item) => (
-              <li key={item} className="hover:text-[#EF426F] cursor-pointer text-left">
-                <button className="outline-none" onClick={() => handleFooterNav(item.toLowerCase())}>{item}</button>
+              <li key={item} className="hover:text-[#EF426F] cursor-pointer">
+                <button className="outline-none" onClick={() => { setPage('home'); setTimeout(() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }), 200); }}>{item}</button>
               </li>
             ))}
           </ul>
@@ -535,8 +516,6 @@ const Footer = ({ setPage, currentPage }) => {
     </footer>
   );
 };
-
-// --- Main App Component ---
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -548,23 +527,11 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-[#EF426F]/20 selection:text-[#EF426F]">
       <Navbar setPage={setPage} currentPage={page} />
-      
       <AnimatePresence mode="wait">
-        <motion.div
-          key={page}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {page === 'home' ? (
-            <HomeView setPage={setPage} />
-          ) : (
-            <DetailView contentId={page} setPage={setPage} />
-          )}
+        <motion.div key={page} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+          {page === 'home' ? <HomeView setPage={setPage} /> : <DetailView contentId={page} setPage={setPage} />}
         </motion.div>
       </AnimatePresence>
-
       <Footer setPage={setPage} currentPage={page} />
     </div>
   );
