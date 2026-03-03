@@ -20,7 +20,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * PEREGRINE INFRASTRUCTURE - PRODUCTION BUILD
- * Image links are now mapped to /public/images/ local assets.
+ * - Clean minimalist layout maintained.
+ * - Image sources pointed to local /images/ folder.
+ * - Mobile dropdown and heading padding fixes applied.
  */
 
 // --- Data Structures: Projects ---
@@ -126,12 +128,13 @@ const Navbar = ({ setPage, currentPage }) => {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || currentPage !== 'home' ? 'bg-white/95 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <button onClick={() => setPage('home')} className="relative h-8 md:h-10 w-40 md:w-48 block transition-opacity hover:opacity-80 outline-none z-[60]">
+        <button onClick={() => setPage('home')} className="relative h-8 md:h-10 w-40 md:w-48 transition-all duration-500 block hover:opacity-80 outline-none z-[60]">
           <img 
             src={(isScrolled || currentPage !== 'home') 
               ? "/images/Peregrine_Colour.png" 
@@ -167,7 +170,7 @@ const Navbar = ({ setPage, currentPage }) => {
                       <button 
                         key={key}
                         onClick={() => { setPage(`project-${key}`); setShowcaseOpen(false); }}
-                        className="block text-white hover:text-[#EF426F] text-[10px] tracking-[0.2em] transition-colors text-left uppercase w-full"
+                        className="block text-white hover:text-[#EF426F] text-[10px] tracking-[0.2em] transition-colors text-left uppercase w-full outline-none"
                       >
                         {projectData[key].title}
                       </button>
@@ -187,7 +190,7 @@ const Navbar = ({ setPage, currentPage }) => {
                       <button 
                         key={key}
                         onClick={() => { setPage(`expertise-${key}`); setExpertiseOpen(false); }}
-                        className="block text-white hover:text-[#EF426F] text-[10px] tracking-[0.2em] transition-colors text-left uppercase w-full"
+                        className="block text-white hover:text-[#EF426F] text-[10px] tracking-[0.2em] transition-colors text-left uppercase w-full outline-none"
                       >
                         {expertiseData[key].title}
                       </button>
@@ -199,50 +202,50 @@ const Navbar = ({ setPage, currentPage }) => {
           ))}
         </div>
 
-        <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
-          <Menu className={`transition-colors duration-500 ${(isScrolled || currentPage !== 'home') ? 'text-slate-900' : 'text-white'}`} />
+        <button className="md:hidden z-[80] outline-none" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? (
+            <X className="text-slate-950" />
+          ) : (
+            <Menu className={`transition-colors duration-500 ${(isScrolled || currentPage !== 'home') ? 'text-slate-900' : 'text-white'}`} />
+          )}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 bg-white z-[70] flex flex-col p-10"
+            className="fixed inset-0 bg-white z-[70] flex flex-col p-10 pt-24 overflow-y-auto"
           >
-            <div className="flex justify-end">
-              <button onClick={() => setMobileMenuOpen(false)}><X size={32} className="text-slate-900" /></button>
-            </div>
-            <div className="flex flex-col gap-6 mt-12 text-2xl font-bold text-slate-900 uppercase">
+            <div className="flex flex-col gap-6 text-2xl font-bold text-slate-900 uppercase">
               {navItems.map((item) => (
                 <div key={item.name} className="space-y-4">
                   <button 
                     onClick={() => {
                       if (!item.dropdown) {
                         handleNavClick(item.id);
-                        setMobileMenuOpen(false);
                       }
                     }}
-                    className="hover:text-[#EF426F]"
+                    className="hover:text-[#EF426F] outline-none text-left"
                   >
                     {item.name}
                   </button>
                   {item.dropdown === 'showcase' && (
-                    <div className="pl-6 flex flex-col gap-3">
+                    <div className="pl-6 flex flex-col gap-3 border-l border-slate-100">
                       {Object.keys(projectData).map(key => (
-                        <button key={key} onClick={() => { setPage(`project-${key}`); setMobileMenuOpen(false); }} className="text-sm text-slate-400 hover:text-[#EF426F] text-left uppercase">
+                        <button key={key} onClick={() => { setPage(`project-${key}`); setMobileMenuOpen(false); }} className="text-sm text-slate-400 hover:text-[#EF426F] text-left uppercase outline-none font-bold">
                           — {projectData[key].title}
                         </button>
                       ))}
                     </div>
                   )}
                   {item.dropdown === 'expertise' && (
-                    <div className="pl-6 flex flex-col gap-3">
+                    <div className="pl-6 flex flex-col gap-3 border-l border-slate-100">
                       {Object.keys(expertiseData).map(key => (
-                        <button key={key} onClick={() => { setPage(`expertise-${key}`); setMobileMenuOpen(false); }} className="text-sm text-slate-400 hover:text-[#EF426F] text-left uppercase">
+                        <button key={key} onClick={() => { setPage(`expertise-${key}`); setMobileMenuOpen(false); }} className="text-sm text-slate-400 hover:text-[#EF426F] text-left uppercase outline-none font-bold">
                           — {expertiseData[key].title}
                         </button>
                       ))}
@@ -274,7 +277,7 @@ const HomeView = ({ setPage }) => (
       </div>
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center text-white flex flex-col items-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 uppercase">DEFINING GLOBAL <br /> INFRASTRUCTURE</h1>
+          <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-4 uppercase leading-tight">DEFINING GLOBAL <br /> INFRASTRUCTURE</h1>
           <p className="text-sm md:text-base tracking-[0.3em] font-medium opacity-80 mb-12 uppercase">Legacy. Innovation. Architectural Integrity.</p>
           <button onClick={() => { const el = document.getElementById('showcase'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="px-10 py-3 border border-white text-white text-[10px] font-bold tracking-[0.3em] uppercase hover:bg-white hover:text-slate-900 transition-all duration-300 outline-none">VIEW SHOWCASE</button>
         </motion.div>
@@ -317,7 +320,7 @@ const HomeView = ({ setPage }) => (
       </div>
     </section>
 
-    {/* Showcase Section */}
+    {/* Showcase Section: Grid aligned to TOP for labels */}
     <section id="showcase" className="relative z-20">
       <div className="max-w-[1400px] mx-auto bg-black pt-16 pb-8 px-10 md:px-8 -mt-24 md:-mt-48 lg:-mt-64 shadow-2xl">
          <h4 className="text-slate-500 font-mono text-xs md:text-[10px] tracking-[0.4em] uppercase mb-2">SELECTED WORKS</h4>
@@ -329,6 +332,7 @@ const HomeView = ({ setPage }) => (
             <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale opacity-85 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 object-center" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/20 to-transparent"></div>
             
+            {/* Labels and description aligned to top of the grid cell */}
             <div className="absolute inset-0 flex flex-col justify-start p-10 md:p-12 text-white space-y-4">
               <h3 className="text-lg md:text-[15px] font-bold tracking-[0.2em] uppercase">{item.title}</h3>
               <p className="text-[17px] md:text-[13px] font-light leading-relaxed opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-500 max-w-[320px] md:max-w-[300px]">{item.desc}</p>
@@ -352,7 +356,7 @@ const HomeView = ({ setPage }) => (
               <div className="w-12 h-12 bg-slate-50 flex items-center justify-center text-[#EF426F]"><Building2 size={28} /></div>
               <span className="text-xl font-bold text-slate-900 tracking-tighter uppercase">CORE EXPERTISE</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-light text-slate-900 uppercase tracking-tight leading-tight">PROPERTY DEVELOPMENT</h2>
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 uppercase tracking-tight leading-tight px-1 md:px-0">PROPERTY DEVELOPMENT</h2>
             <p className="text-slate-500 text-lg leading-relaxed max-w-md">End-to-end project management from greenfield identification to architectural completion.</p>
             <button onClick={() => setPage('expertise-property-development')} className="flex items-center gap-3 text-[10px] font-bold tracking-[0.3em] uppercase border-b border-slate-200 pb-1 hover:border-[#EF426F] transition-all outline-none">
               READ MORE <ArrowRight size={12} />
@@ -364,7 +368,7 @@ const HomeView = ({ setPage }) => (
               <div className="w-12 h-12 bg-slate-50 flex items-center justify-center text-[#EF426F]"><Layout size={28} /></div>
               <span className="text-xl font-bold text-slate-900 tracking-tighter uppercase">ASSET MANAGEMENT</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-light text-slate-900 uppercase tracking-tight leading-tight">PORTFOLIO OPTIMIZATION</h2>
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 uppercase tracking-tight leading-tight px-1 md:px-0">PORTFOLIO OPTIMIZATION</h2>
             <p className="text-slate-500 text-lg leading-relaxed max-w-md">Maximizing the long-term value of diverse portfolios through operational efficiency.</p>
             <button onClick={() => setPage('expertise-asset-management')} className="flex items-center gap-3 text-[10px] font-bold tracking-[0.3em] uppercase border-b border-slate-200 pb-1 hover:border-[#EF426F] transition-all outline-none">
               READ MORE <ArrowRight size={12} />
@@ -388,38 +392,38 @@ const HomeView = ({ setPage }) => (
         <div className="max-w-3xl">
           <h4 className="text-[#EF426F] font-mono mb-6 text-xs uppercase tracking-[0.5em] font-bold">FUTURE PROOFING</h4>
           <h2 className="text-4xl md:text-7xl font-bold mb-12 leading-none uppercase tracking-tighter text-white">SUSTAINABLE <br className="hidden md:block" />ARCHITECTURE</h2>
-          <p className="text-xl leading-relaxed mb-16 max-w-lg font-light text-slate-200 opacity-90">Responsible development for a carbon-neutral future. We integrate ESD into every project.</p>
+          <p className="text-xl leading-relaxed mb-16 max-w-lg font-light text-slate-200 opacity-90 italic">Responsible development for a carbon-neutral future. We integrate ESD into every project.</p>
           <div className="p-8 md:p-12 bg-white/5 backdrop-blur-md border-l-4 border-[#EF426F] max-w-md">
             <div className="flex gap-4 items-center mb-6">
               <Wind className="text-[#EF426F]" size={32} />
-              <h4 className="text-xl md:text-2xl font-bold text-white tracking-widest uppercase">ESD STRATEGY</h4>
+              <h4 className="text-xl md:text-2xl font-bold text-white tracking-widest uppercase italic">ESD STRATEGY</h4>
             </div>
-            <p className="text-base italic leading-relaxed opacity-80 text-slate-300">Proprietary engine targeting minimum 5-star Green Star ratings.</p>
+            <p className="text-base italic leading-relaxed opacity-80 text-slate-300 font-medium">Proprietary engine targeting minimum 5-star Green Star ratings.</p>
           </div>
         </div>
       </div>
     </section>
 
     {/* Contact Section */}
-    <section id="contact" className="py-32 px-6 bg-white">
-      <div className="max-w-4xl mx-auto p-16 shadow-2xl border border-slate-50">
+    <section id="contact" className="py-32 px-6 bg-white overflow-hidden">
+      <div className="max-w-4xl mx-auto p-10 md:p-16 shadow-2xl border border-slate-50">
         <div className="flex items-center gap-4 text-[#EF426F] mb-8">
           <MessageSquare size={32} fill="currentColor" />
-          <span className="text-sm uppercase tracking-[0.4em] font-bold">CONTACT</span>
+          <span className="text-sm uppercase tracking-[0.4em] font-bold italic">CONTACT</span>
         </div>
-        <h2 className="text-5xl font-light mb-12 text-slate-900 uppercase tracking-tight">START A CONVERSATION</h2>
+        <h2 className="text-3xl md:text-5xl font-light mb-12 text-slate-900 uppercase tracking-tight leading-tight px-1 md:px-0">START A <br className="md:hidden"/> CONVERSATION</h2>
         <form onSubmit={(e) => e.preventDefault()} className="space-y-10">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-4">
-              <label className="text-[11px] uppercase tracking-[0.3em] font-bold text-[#B2A8A2]">FULL NAME</label>
-              <input type="text" className="w-full border-b-2 border-slate-100 focus:border-[#EF426F] py-3 outline-none font-medium" placeholder="YOUR NAME" />
+              <label className="text-[11px] uppercase tracking-[0.3em] font-bold text-[#B2A8A2] italic">FULL NAME</label>
+              <input type="text" className="w-full border-b-2 border-slate-100 focus:border-[#EF426F] py-3 outline-none font-medium text-slate-900" placeholder="YOUR NAME" />
             </div>
             <div className="space-y-4">
-              <label className="text-[11px] uppercase tracking-[0.3em] font-bold text-[#B2A8A2]">EMAIL ADDRESS</label>
-              <input type="email" className="w-full border-b-2 border-slate-100 focus:border-[#EF426F] py-3 outline-none font-medium" placeholder="EMAIL@EXAMPLE.COM" />
+              <label className="text-[11px] uppercase tracking-[0.3em] font-bold text-[#B2A8A2] italic">EMAIL ADDRESS</label>
+              <input type="email" className="w-full border-b-2 border-slate-100 focus:border-[#EF426F] py-3 outline-none font-medium text-slate-900" placeholder="EMAIL@EXAMPLE.COM" />
             </div>
           </div>
-          <button type="submit" className="w-full py-6 flex items-center justify-center gap-4 text-white bg-slate-900 hover:bg-[#EF426F] transition-all uppercase text-xs font-bold tracking-[0.4em] outline-none">
+          <button type="submit" className="w-full py-6 flex items-center justify-center gap-4 text-white bg-slate-900 hover:bg-[#EF426F] transition-all uppercase text-xs font-bold tracking-[0.4em] outline-none italic">
             SEND MESSAGE <Send size={16}/>
           </button>
         </form>
@@ -428,7 +432,7 @@ const HomeView = ({ setPage }) => (
   </>
 );
 
-// --- View: Detail ---
+// --- View: Detail (Unified Template for Projects & Expertise) ---
 
 const DetailView = ({ contentId, setPage }) => {
   let content = null;
@@ -447,7 +451,7 @@ const DetailView = ({ contentId, setPage }) => {
         <div className="max-w-7xl mx-auto w-full px-6 pb-16 pt-32 relative z-10 flex flex-col justify-end h-full">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h4 className="text-[#EF426F] font-mono text-[11px] tracking-[0.4em] uppercase font-bold mb-4">{content.subtitle}</h4>
-            <h1 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-none">{content.title}</h1>
+            <h1 className="text-3xl md:text-6xl font-bold text-white uppercase tracking-tight leading-none italic">{content.title}</h1>
           </motion.div>
         </div>
       </section>
@@ -459,10 +463,10 @@ const DetailView = ({ contentId, setPage }) => {
             <div className="h-px bg-slate-100 w-full"></div>
             <p className="text-xl text-slate-500 leading-relaxed font-light">{content.details}</p>
           </div>
-          <div className="lg:col-span-4 bg-slate-50 p-10 md:p-12 space-y-12 border-t-4 border-[#EF426F] h-fit sticky top-32">
+          <div className="lg:col-span-4 bg-slate-50 p-10 md:p-12 space-y-12 border-t-4 border-[#EF426F] h-fit sticky top-32 rounded-3xl md:rounded-none shadow-sm">
             {content.stats.map((stat, i) => (
               <div key={i} className="space-y-2">
-                <div className="text-[10px] font-bold text-slate-400 tracking-[0.4em] uppercase">{stat.label}</div>
+                <div className="text-[10px] font-bold text-slate-400 tracking-[0.4em] uppercase italic">{stat.label}</div>
                 <div className="text-5xl font-bold text-slate-900">{stat.value}</div>
               </div>
             ))}
@@ -470,44 +474,58 @@ const DetailView = ({ contentId, setPage }) => {
         </div>
       </section>
 
+      {/* Fixed "Back to Home" button at bottom resolving logo conflict */}
       <div className="fixed bottom-10 left-10 z-[100]">
         <motion.button 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           whileHover={{ scale: 1.05 }}
           onClick={() => setPage('home')} 
-          className="bg-slate-900/90 backdrop-blur-md text-white px-8 py-4 flex items-center gap-4 text-[11px] tracking-[0.4em] uppercase font-bold group shadow-2xl transition-all hover:bg-[#EF426F] outline-none"
+          className="bg-slate-900/90 backdrop-blur-md text-white px-8 py-4 flex items-center gap-4 text-[11px] tracking-[0.4em] uppercase font-bold group shadow-2xl transition-all hover:bg-[#EF426F] outline-none italic rounded-full"
         >
-          <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> BACK TO HOME
+          <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> BACK
         </motion.button>
       </div>
     </div>
   );
 };
 
-// --- Footer ---
+// --- Footer Component ---
 
 const Footer = ({ setPage, currentPage }) => {
+  const handleFooterNav = (id) => {
+    if (currentPage !== 'home') {
+      setPage('home');
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="py-24 px-6 bg-slate-950 border-t border-white/5 text-white">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 text-left">
         <div className="col-span-2">
           <div className="h-12 mb-10">
             <img src="/images/Peregrine_white.png" alt="Peregrine" className="h-full w-auto object-contain" />
           </div>
-          <p className="text-slate-400 max-w-sm mb-10 leading-relaxed text-lg md:text-base">Evolving the Australian landscape through visionary property and high-performance infrastructure solutions.</p>
+          <p className="text-slate-400 max-w-sm mb-10 leading-relaxed text-lg md:text-base font-medium">Evolving the Australian landscape through visionary property and high-performance infrastructure solutions.</p>
         </div>
         <div>
-          <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">OFFICE</h4>
-          <p className="text-slate-400 text-sm leading-relaxed mb-4">270 The Parade, Kensington SA 5068</p>
-          <p className="text-slate-400 text-sm">office@peregrine.com.au</p>
+          <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2] italic">OFFICE</h4>
+          <p className="text-slate-400 text-base md:text-sm leading-relaxed mb-4 text-left font-medium">270 The Parade,<br />Kensington SA 5068</p>
+          <p className="text-slate-400 text-base md:text-sm text-left font-medium">office@peregrine.com.au</p>
         </div>
         <div>
-          <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">NAVIGATE</h4>
-          <ul className="text-slate-400 text-sm space-y-3 uppercase tracking-widest font-bold">
+          <h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2] italic">NAVIGATE</h4>
+          <ul className="text-slate-400 text-base md:text-sm space-y-3 uppercase tracking-widest font-bold">
             {['About', 'Expertise', 'Sustainability', 'Contact'].map((item) => (
-              <li key={item} className="hover:text-[#EF426F] cursor-pointer">
-                <button className="outline-none" onClick={() => { setPage('home'); setTimeout(() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }), 200); }}>{item}</button>
+              <li key={item} className="hover:text-[#EF426F] cursor-pointer text-left">
+                <button className="outline-none" onClick={() => handleFooterNav(item.toLowerCase())}>{item}</button>
               </li>
             ))}
           </ul>
@@ -516,6 +534,8 @@ const Footer = ({ setPage, currentPage }) => {
     </footer>
   );
 };
+
+// --- Main App Component ---
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -527,11 +547,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-[#EF426F]/20 selection:text-[#EF426F]">
       <Navbar setPage={setPage} currentPage={page} />
+      
       <AnimatePresence mode="wait">
-        <motion.div key={page} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-          {page === 'home' ? <HomeView setPage={setPage} /> : <DetailView contentId={page} setPage={setPage} />}
+        <motion.div
+          key={page}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {page === 'home' ? (
+            <HomeView setPage={setPage} />
+          ) : (
+            <DetailView contentId={page} setPage={setPage} />
+          )}
         </motion.div>
       </AnimatePresence>
+
       <Footer setPage={setPage} currentPage={page} />
     </div>
   );
