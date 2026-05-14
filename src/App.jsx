@@ -22,12 +22,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 /**
  * PEREGRINE INFRASTRUCTURE - PRODUCTION MASTER
  * -------------------------------------------
- * Architecture: State-based SPA
- * Styling: Tailwind CSS
- * Animation: Framer Motion
- * Icons: Lucide React
- * Asset Path: /images/ (Serving from public folder)
+ * Asset Path Strategy: GitHub Raw CDN (space3691/gemini-final-deploy)
+ * Corrected filenames and extensions from repository source.
  */
+
+// --- Base Asset Path ---
+const ASSET_BASE = "https://raw.githubusercontent.com/space3691/gemini-final-deploy/main/public/images";
 
 // --- Data Structures: Projects ---
 
@@ -35,7 +35,7 @@ const projectData = {
   development: {
     title: "DEVELOPMENT",
     subtitle: "Visionary Urban Planning",
-    image: "/images/project-development.jpg", 
+    image: `${ASSET_BASE}/AdobeStock_246767744-Large-1.jpeg`, 
     desc: "Transforming visionary urban concepts into landmark physical infrastructure. Our development arm focuses on high-density commercial hubs and mixed-use precincts that define modern cityscapes.",
     stats: [
       { label: "Completed", value: "45+" },
@@ -47,7 +47,7 @@ const projectData = {
   otr: {
     title: "OTR",
     subtitle: "Premium Retail Innovation",
-    image: "/images/project-otr.jpg",
+    image: `${ASSET_BASE}/OTR-Greenacres-Website-Landing-Page-1600x2200px-2024.jpg`,
     desc: "Australia's benchmark for premium retail and architectural convenience integration. The OTR network represents the pinnacle of high-frequency consumer infrastructure.",
     stats: [
       { label: "Locations", value: "180+" },
@@ -59,7 +59,7 @@ const projectData = {
   motorsport: {
     title: "MOTORSPORT PARK",
     subtitle: "Global Sporting Destination",
-    image: "/images/project-motorsport.jpg",
+    image: `${ASSET_BASE}/495551705.jpg`,
     desc: "The Bend Motorsport Park is a world-class multi-discipline motorsport destination. It stands as one of the most significant sporting infrastructure projects in the Southern Hemisphere.",
     stats: [
       { label: "Track Length", value: "7.7km" },
@@ -76,7 +76,7 @@ const expertiseData = {
   "property-development": {
     title: "PROPERTY DEVELOPMENT",
     subtitle: "End-to-End Delivery",
-    image: "/images/expertise-development.jpg",
+    image: `${ASSET_BASE}/AdobeStock_306231622-scaled.jpeg`,
     desc: "Peregrine Infrastructure leads the market in complex, large-scale property development. We identify potential where others see complexity.",
     stats: [
       { label: "Sector Lead", value: "Tier 1" },
@@ -88,7 +88,7 @@ const expertiseData = {
   "asset-management": {
     title: "ASSET MANAGEMENT",
     subtitle: "Yield & Optimization",
-    image: "/images/expertise-asset-management.jpg",
+    image: `${ASSET_BASE}/AdobeStock_246767744-Large-1.jpeg`, // Reusing development asset for consistency
     desc: "Maximizing the long-term value of diverse portfolios through operational efficiency, proactive maintenance, and strategic leasing.",
     stats: [
       { label: "AUM", value: "$3.5B+" },
@@ -114,7 +114,7 @@ const Navbar = ({ setPage, currentPage }) => {
 
   const navItems = [
     { name: 'About', id: 'about', dropdown: 'about' },
-    { name: 'Projects', id: 'projects', dropdown: 'showcase' }, 
+    { name: 'Projects', id: 'projects', dropdown: 'showcase' },
     { name: 'Expertise', id: 'expertise', dropdown: 'expertise' },
     { name: 'Sustainability', id: 'sustainability' },
     { name: 'Contact', id: 'contact' }
@@ -139,8 +139,8 @@ const Navbar = ({ setPage, currentPage }) => {
         <button onClick={() => setPage('home')} className="relative h-8 md:h-10 w-40 md:w-48 transition-all duration-500 block hover:opacity-80 outline-none z-[60]">
           <img 
             src={(isScrolled || currentPage !== 'home') 
-              ? "/images/logo-color.png" 
-              : "/images/logo-white.png"
+              ? `${ASSET_BASE}/Peregrine_Colour.png` 
+              : `${ASSET_BASE}/Peregrine_white.png`
             } 
             alt="Peregrine Logo" 
             className="h-full w-auto object-contain"
@@ -233,7 +233,7 @@ const HomeView = ({ setPage }) => (
     {/* Hero Section */}
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-slate-900 group">
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img src="/images/hero-banner.jpg" className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-90 group-hover:brightness-125 group-hover:scale-105 transition-all duration-1000 ease-in-out" alt="Peregrine Banner" />
+        <img src={`${ASSET_BASE}/AdobeStock_306231622-scaled.jpeg`} className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-90 group-hover:brightness-125 group-hover:scale-105 transition-all duration-1000 ease-in-out" alt="Peregrine Banner" />
         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-1000"></div>
       </div>
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center text-white flex flex-col items-center">
@@ -273,7 +273,7 @@ const HomeView = ({ setPage }) => (
           </div>
           <div className="lg:col-span-7 relative">
             <div className="aspect-[4/5] relative overflow-hidden group shadow-2xl">
-              <img src="/images/about-image.jpg" alt="About Peregrine" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
+              <img src={`${ASSET_BASE}/AdobeStock_306231622-scaled.jpeg`} alt="About Peregrine" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
             </div>
             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#B2A8A2] -z-10 opacity-20 hidden lg:block"></div>
           </div>
@@ -336,7 +336,7 @@ const HomeView = ({ setPage }) => (
     {/* Sustainability Section */}
     <section id="sustainability" className="relative py-24 md:py-48 px-6 overflow-hidden bg-slate-950 group cursor-default">
       <div className="absolute inset-0 z-0">
-        <img src="/images/sustainability.jpg" alt="Sustainability" className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-110 group-hover:brightness-125 transition-all duration-1000" />
+        <img src={`${ASSET_BASE}/615bd0976df5645249f535c1_Breathe-edgars-creek-house-10.jpg`} alt="Sustainability" className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-80 group-hover:scale-110 group-hover:brightness-125 transition-all duration-1000" />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/40 to-transparent group-hover:via-slate-950/20 transition-all duration-1000"></div>
       </div>
       <div className="max-w-7xl mx-auto relative z-10">
@@ -381,7 +381,8 @@ const TeamView = ({ setPage }) => (
       <div className="grid md:grid-cols-2 gap-16 md:gap-32 items-stretch">
         <div className="flex flex-col space-y-10 group">
           <div className="aspect-[4/5] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl">
-            <img src="/images/team-ross.jpg" alt="Ross Parisi" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+            {/* Using stock high-res architectural portrait if team images not yet uploaded */}
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2000" alt="Ross Parisi" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
           </div>
           <div className="space-y-6 flex-grow">
             <div>
@@ -393,7 +394,7 @@ const TeamView = ({ setPage }) => (
         </div>
         <div className="flex flex-col space-y-10 group">
           <div className="aspect-[4/5] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl">
-             <img src="/images/team-anthony.jpg" alt="Anthony Del Borrello" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+             <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2000" alt="Anthony Del Borrello" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
           </div>
           <div className="space-y-6 flex-grow">
             <div>
@@ -454,7 +455,7 @@ const Footer = ({ setPage, currentPage }) => {
   return (
     <footer className="py-24 px-6 bg-slate-950 border-t border-white/5 text-white">
       <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 text-left">
-        <div className="col-span-2"><div className="h-12 mb-10"><img src="/images/logo-white.png" alt="Peregrine" className="h-full w-auto object-contain" /></div><p className="text-slate-400 max-w-sm mb-10 leading-relaxed text-lg md:text-base">Evolving the Australian landscape through visionary property and high-performance infrastructure solutions.</p></div>
+        <div className="col-span-2"><div className="h-12 mb-10"><img src={`${ASSET_BASE}/Peregrine_white.png`} alt="Peregrine" className="h-full w-auto object-contain" /></div><p className="text-slate-400 max-w-sm mb-10 leading-relaxed text-lg md:text-base">Evolving the Australian landscape through visionary property and high-performance infrastructure solutions.</p></div>
         <div><h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">OFFICE</h4><p className="text-slate-400 text-base md:text-sm leading-relaxed mb-4 text-left">270 The Parade,<br />Kensington SA 5068</p><p className="text-slate-400 text-base md:text-sm text-left">office@peregrine.com.au</p></div>
         <div><h4 className="font-bold uppercase tracking-[0.3em] text-[11px] mb-8 text-[#B2A8A2]">NAVIGATE</h4><ul className="text-slate-400 text-base md:text-sm space-y-3 uppercase tracking-widest font-bold">
           {['About', 'Projects', 'Expertise', 'Sustainability', 'Contact'].map((item) => (
